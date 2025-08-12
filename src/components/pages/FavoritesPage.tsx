@@ -179,13 +179,15 @@ const FavoritesPage: React.FC<FavoritesPageProps> = ({
         
         {/* Manual regenerate button */}
         {recipesWithImages.length > 0 && !isRegeneratingImages && (
-          <button
-            onClick={regenerateImagesForRecipes}
-            className="mt-4 bg-gradient-to-r from-orange-500 to-amber-500 text-white font-semibold px-4 py-2 rounded-lg hover:from-orange-600 hover:to-amber-600 transition-all duration-300 text-sm flex items-center gap-2"
-          >
-            <RefreshCw className="w-4 h-4" />
-            Regenerate All Images
-          </button>
+          <div className="flex justify-center mt-6">
+            <button
+              onClick={regenerateImagesForRecipes}
+              className="bg-gradient-to-r from-orange-500 to-amber-500 text-white font-semibold px-6 py-3 rounded-lg hover:from-orange-600 hover:to-amber-600 transition-all duration-300 text-sm flex items-center gap-2 shadow-lg hover:shadow-xl transform hover:scale-105"
+            >
+              <RefreshCw className="w-4 h-4" />
+              Regenerate All Images
+            </button>
+          </div>
         )}
       </div>
 
