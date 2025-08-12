@@ -24,10 +24,10 @@ const CookingPath: React.FC<CookingPathProps> = ({ selectedRecipes, onBack }) =>
   const [completedSteps, setCompletedSteps] = useState<Set<string>>(new Set());
   const [servingAdjustments, setServingAdjustments] = useState<{[recipeName: string]: number}>({});
 
-  // Timer effect
+  // Timer effect - ALWAYS call this hook
   React.useEffect(() => {
     let interval: NodeJS.Timeout;
-    if (isTimerActive) {
+    if (isTimerActive && schedule) { // Only run timer if we have a schedule
       interval = setInterval(() => {
         setElapsedSeconds(prev => prev + 1);
       }, 1000);
@@ -35,8 +35,9 @@ const CookingPath: React.FC<CookingPathProps> = ({ selectedRecipes, onBack }) =>
     return () => {
       if (interval) clearInterval(interval);
     };
-  }, [isTimerActive]);
+  }, [isTimerActive, schedule]);
 
+  // Helper functions - define all functions before any conditional returns
   const generateSchedule = async () => {
     setIsGenerating(true);
     setError(null);
@@ -46,65 +47,8 @@ const CookingPath: React.FC<CookingPathProps> = ({ selectedRecipes, onBack }) =>
     setElapsedSeconds(0);
     
     try {
-      // Apply serving adjustments to recipes
-      const adjustedRecipes = selectedRecipes.map(recipe => {
-        const adjustment = servingAdjustments[recipe.recipeName] || 1;
-        if (adjustment === 1) return recipe;
-        
-        // Adjust ingredients quantities with better number parsing
-        const adjustedIngredients = recipe.ingredients.map(ingredient => {
-          // Handle various number formats: "2 cups", "1/2 tbsp", "1.5 kg", etc.
-          return ingredient.replace(/(\d+(?:\.\d+)?(?:\/\d+)?)/g, (match) => {
-            // Handle fractions like "1/2"
-            if (match.includes('/')) {
-              const [numerator, denominator] = match.split('/');
-              const fractionValue = parseFloat(numerator) / parseFloat(denominator);
-              const adjustedValue = fractionValue * adjustment;
-              // Convert back to fraction if result is simple, otherwise use decimal
-              if (adjustedValue < 1 && adjustedValue * 2 === Math.floor(adjustedValue * 2)) {
-                return `${Math.floor(adjustedValue * 2)}/2`;
-              } else if (adjustedValue < 1 && adjustedValue * 4 === Math.floor(adjustedValue * 4)) {
-                return `${Math.floor(adjustedValue * 4)}/4`;
-              }
-              return adjustedValue.toString();
-            } else {
-              const num = parseFloat(match);
-              const adjusted = num * adjustment;
-              // Round to reasonable precision
-              return adjusted % 1 === 0 ? adjusted.toString() : adjusted.toFixed(1);
-            }
-          });
-        });
-
-        // Adjust cooking times if serving size significantly changes
-        let adjustedPrepTime = recipe.prepTime;
-        let adjustedCookTime = recipe.cookTime || recipe.cookingTime;
-        
-        if (adjustment > 2) {
-          // For large serving increases, add some extra prep time
-          const prepMinutes = parseInt(adjustedPrepTime?.match(/\d+/)?.[0] || '10');
-          const extraPrepTime = Math.ceil(prepMinutes * 0.3); // 30% more prep time
-          adjustedPrepTime = `${prepMinutes + extraPrepTime} minutes`;
-        } else if (adjustment < 0.75) {
-          // For smaller serving sizes, slightly reduce prep time
-          const prepMinutes = parseInt(adjustedPrepTime?.match(/\d+/)?.[0] || '10');
-          const reducedPrepTime = Math.max(5, Math.ceil(prepMinutes * 0.8)); // Minimum 5 minutes
-          adjustedPrepTime = `${reducedPrepTime} minutes`;
-        }
-        
-        return {
-          ...recipe,
-          ingredients: adjustedIngredients,
-          servingSize: `Serves ${Math.ceil((parseInt(recipe.servingSize?.match(/\d+/)?.[0] || '2')) * adjustment)}`,
-          prepTime: adjustedPrepTime,
-          cookTime: adjustedCookTime,
-          // Add serving adjustment info for the scheduler
-          servingAdjustment: adjustment
-        };
-      });
-      
       const cookingRequest = {
-        recipes: adjustedRecipes,
+        recipes: selectedRecipes,
         preferredServingTime: servingTime || undefined,
         kitchenEquipment: equipment ? equipment.split(',').map(e => e.trim()) : undefined,
         skillLevel
@@ -236,6 +180,91 @@ const CookingPath: React.FC<CookingPathProps> = ({ selectedRecipes, onBack }) =>
     return schedule.steps[currentStepIndex];
   };
 
+  // Conditional rendering - now all hooks have been called
+  if (!schedule) {
+    setIsGenerating(true);
+    setError(null);
+    setCurrentStepIndex(0);
+    setCompletedSteps(new Set());
+    setIsTimerActive(false);
+    setElapsedSeconds(0);
+    
+    try {
+      // Apply serving adjustments to recipes
+      const adjustedRecipes = selectedRecipes.map(recipe => {
+        const adjustment = servingAdjustments[recipe.recipeName] || 1;
+        if (adjustment === 1) return recipe;
+        
+        // Adjust ingredients quantities with better number parsing
+        const adjustedIngredients = recipe.ingredients.map(ingredient => {
+          // Handle various number formats: "2 cups", "1/2 tbsp", "1.5 kg", etc.
+          return ingredient.replace(/(\d+(?:\.\d+)?(?:\/\d+)?)/g, (match) => {
+            // Handle fractions like "1/2"
+            if (match.includes('/')) {
+              const [numerator, denominator] = match.split('/');
+              const fractionValue = parseFloat(numerator) / parseFloat(denominator);
+              const adjustedValue = fractionValue * adjustment;
+              // Convert back to fraction if result is simple, otherwise use decimal
+              if (adjustedValue < 1 && adjustedValue * 2 === Math.floor(adjustedValue * 2)) {
+                return `${Math.floor(adjustedValue * 2)}/2`;
+              } else if (adjustedValue < 1 && adjustedValue * 4 === Math.floor(adjustedValue * 4)) {
+                return `${Math.floor(adjustedValue * 4)}/4`;
+              }
+              return adjustedValue.toString();
+            } else {
+              const num = parseFloat(match);
+              const adjusted = num * adjustment;
+              // Round to reasonable precision
+              return adjusted % 1 === 0 ? adjusted.toString() : adjusted.toFixed(1);
+            }
+          });
+        });
+
+        // Adjust cooking times if serving size significantly changes
+        let adjustedPrepTime = recipe.prepTime;
+        let adjustedCookTime = recipe.cookTime || recipe.cookingTime;
+        
+        if (adjustment > 2) {
+          // For large serving increases, add some extra prep time
+          const prepMinutes = parseInt(adjustedPrepTime?.match(/\d+/)?.[0] || '10');
+          const extraPrepTime = Math.ceil(prepMinutes * 0.3); // 30% more prep time
+          adjustedPrepTime = `${prepMinutes + extraPrepTime} minutes`;
+        } else if (adjustment < 0.75) {
+          // For smaller serving sizes, slightly reduce prep time
+          const prepMinutes = parseInt(adjustedPrepTime?.match(/\d+/)?.[0] || '10');
+          const reducedPrepTime = Math.max(5, Math.ceil(prepMinutes * 0.8)); // Minimum 5 minutes
+          adjustedPrepTime = `${reducedPrepTime} minutes`;
+        }
+        
+        return {
+          ...recipe,
+          ingredients: adjustedIngredients,
+          servingSize: `Serves ${Math.ceil((parseInt(recipe.servingSize?.match(/\d+/)?.[0] || '2')) * adjustment)}`,
+          prepTime: adjustedPrepTime,
+          cookTime: adjustedCookTime,
+          // Add serving adjustment info for the scheduler
+          servingAdjustment: adjustment
+        };
+      });
+      
+      const cookingRequest = {
+        recipes: adjustedRecipes,
+        preferredServingTime: servingTime || undefined,
+        kitchenEquipment: equipment ? equipment.split(',').map(e => e.trim()) : undefined,
+        skillLevel
+      };
+      
+      const generatedSchedule = await generateCookingSchedule(cookingRequest);
+      setSchedule(generatedSchedule);
+    } catch (err) {
+      setError('Failed to generate cooking schedule. Please try again.');
+      console.error(err);
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
+  // Conditional rendering - now all hooks have been called
   if (!schedule) {
     return (
       <div className="container mx-auto max-w-5xl p-3 sm:p-4">
