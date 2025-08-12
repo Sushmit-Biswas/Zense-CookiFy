@@ -6,12 +6,6 @@
 
 ![Line](https://user-images.githubusercontent.com/85225156/171937799-8fc9e255-9889-4642-9c92-6df85fb86e82.gif)
 
-  <!-- Subtitle with Chef Emojis -->
-  <h1>
-    
-    Smart Recipe Discovery & AI-Powered Cooking
-    
-  </h1>
 </div>
 
   [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -181,15 +175,15 @@ Follow these steps to set up and run CookiFy locally:
 <div align="center">
   <h3>🏠 Smart Recipe Generation</h3>
   <p>Transform your ingredients into culinary masterpieces with AI-powered recipe creation</p>
+  <img src="dist/assets/img1.jpg" alt="Smart Recipe Generation" width="80%" style="border-radius: 10px; margin: 20px 0; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
   
   <h3>🔄 Recipe Reinvention</h3>
   <p>Reimagine your favorite dishes with different styles, cuisines, and dietary adaptations</p>
-  
-  <h3>📱 Voice-Controlled Cooking</h3>
-  <p>Hands-free cooking experience with intelligent voice commands and audio guidance</p>
+  <img src="dist/assets/img2.jpg" alt="Recipe Reinvention" width="80%" style="border-radius: 10px; margin: 20px 0; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
   
   <h3>⏰ Smart Cooking Schedules</h3>
   <p>AI-generated cooking timelines that optimize your kitchen workflow</p>
+  <img src="dist/assets/img3.jpg" alt="Smart Cooking Schedules" width="80%" style="border-radius: 10px; margin: 20px 0; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
 </div>
 
 ---
