@@ -10,6 +10,23 @@ interface CookingPathProps {
 }
 
 const CookingPath: React.FC<CookingPathProps> = ({ selectedRecipes, onBack }) => {
+  // Add safety check for selectedRecipes
+  if (!selectedRecipes || selectedRecipes.length === 0) {
+    return (
+      <div className="container mx-auto max-w-5xl p-4">
+        <div className="bg-white rounded-2xl shadow-lg p-8 text-center">
+          <div className="text-red-600 text-xl font-bold mb-4">No recipes selected</div>
+          <p className="text-gray-600 mb-6">Please select some recipes before accessing the cooking path.</p>
+          <button
+            onClick={onBack}
+            className="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600"
+          >
+            Go Back
+          </button>
+        </div>
+      </div>
+    );
+  }
   const [schedule, setSchedule] = useState<CookingSchedule | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -38,6 +55,7 @@ const CookingPath: React.FC<CookingPathProps> = ({ selectedRecipes, onBack }) =>
   }, [isTimerActive]);
 
   const generateSchedule = async () => {
+    console.log('Generating cooking schedule for recipes:', selectedRecipes);
     setIsGenerating(true);
     setError(null);
     setCurrentStepIndex(0);
@@ -110,11 +128,13 @@ const CookingPath: React.FC<CookingPathProps> = ({ selectedRecipes, onBack }) =>
         skillLevel
       };
       
+      console.log('Sending cooking request:', cookingRequest);
       const generatedSchedule = await generateCookingSchedule(cookingRequest);
+      console.log('Generated schedule:', generatedSchedule);
       setSchedule(generatedSchedule);
     } catch (err) {
+      console.error('Error generating cooking schedule:', err);
       setError('Failed to generate cooking schedule. Please try again.');
-      console.error(err);
     } finally {
       setIsGenerating(false);
     }

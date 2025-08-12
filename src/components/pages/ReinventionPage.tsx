@@ -49,14 +49,8 @@ const ReinventionPage: React.FC<ReinventionPageProps> = ({ onSaveRecipe, isRecip
     setShowCookingPath(true);
   };
 
-  if (showCookingPath) {
-    return (
-      <CookingPath 
-        selectedRecipes={selectedRecipes} 
-        onBack={() => setShowCookingPath(false)}
-      />
-    );
-  }
+  // Removed the early return for cooking path to fix black screen issue
+  // The cooking path will be rendered as a modal instead
 
   const handleReinventRecipe = useCallback(async () => {
     if (!reinventionDish.trim()) {
@@ -495,8 +489,8 @@ const ReinventionPage: React.FC<ReinventionPageProps> = ({ onSaveRecipe, isRecip
 
       {/* Cooking Path Modal */}
       {showCookingPath && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-2xl max-w-6xl w-full max-h-[95vh] overflow-y-auto">
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50 overflow-y-auto">
+          <div className="bg-white rounded-2xl max-w-7xl w-full max-h-[95vh] overflow-y-auto shadow-2xl">
             <CookingPath 
               selectedRecipes={selectedRecipes} 
               onBack={() => setShowCookingPath(false)}
