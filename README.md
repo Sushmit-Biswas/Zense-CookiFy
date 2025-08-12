@@ -171,19 +171,18 @@ Follow these steps to set up and run CookiFy locally:
 
 
 ## <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f4f8/512.webp" width="25px" /> Showcase
-
 <div align="center">
   <h3>🏠 Smart Recipe Generation</h3>
   <p>Transform your ingredients into culinary masterpieces with AI-powered recipe creation</p>
-  <img src="dist/assets/img1.jpg" alt="Smart Recipe Generation" width="80%" style="border-radius: 10px; margin: 20px 0; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+  <img src="public/images/img1.jpg" alt="Smart Recipe Generation" width="80%" style="border-radius: 10px; margin: 20px 0; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
   
   <h3>🔄 Recipe Reinvention</h3>
   <p>Reimagine your favorite dishes with different styles, cuisines, and dietary adaptations</p>
-  <img src="dist/assets/img2.jpg" alt="Recipe Reinvention" width="80%" style="border-radius: 10px; margin: 20px 0; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+  <img src="public/images/img2.jpg" alt="Recipe Reinvention" width="80%" style="border-radius: 10px; margin: 20px 0; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
   
   <h3>⏰ Smart Cooking Schedules</h3>
   <p>AI-generated cooking timelines that optimize your kitchen workflow</p>
-  <img src="dist/assets/img3.jpg" alt="Smart Cooking Schedules" width="80%" style="border-radius: 10px; margin: 20px 0; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+  <img src="public/images/img3.jpg" alt="Smart Cooking Schedules" width="80%" style="border-radius: 10px; margin: 20px 0; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
 </div>
 
 ---
