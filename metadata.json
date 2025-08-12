@@ -1,0 +1,6 @@
+{
+  "name": "CookiFy",
+  "description": "CookiFy helps users generate creative recipes based on photos of their fridge contents. Upload multiple photos, get recipe ideas with stunning images, and reduce food waste.",
+  "requestFramePermissions": [],
+  "prompt": ""
+}
