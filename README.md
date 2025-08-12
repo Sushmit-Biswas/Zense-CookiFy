@@ -3,16 +3,14 @@
   <!-- Uncomment when banner is ready: -->
   <img src="public/images/cookify_banner.jpg" alt="CookiFy Banner" width="100%" style="border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
 
-  <!-- Stylized CookiFy Logo -->
-  <img src="public/images/cookify_icon.jpg" alt="CookiFy" height="100" style="margin: 30px 0 10px 0; border-radius: 20px; box-shadow: 0 5px 15px rgba(245, 158, 11, 0.3);" />
 
 ![Line](https://user-images.githubusercontent.com/85225156/171937799-8fc9e255-9889-4642-9c92-6df85fb86e82.gif)
 
   <!-- Subtitle with Chef Emojis -->
   <h1>
-    <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f468_200d_1f373/512.webp" width="30px" alt="Chef" />
+    
     Smart Recipe Discovery & AI-Powered Cooking
-    <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f468_200d_1f373/512.webp" width="30px" alt="Chef" />
+    
   </h1>
 </div>
 
@@ -30,7 +28,7 @@
 ![Line](https://user-images.githubusercontent.com/85225156/171937799-8fc9e255-9889-4642-9c92-6df85fb86e82.gif)
 
 <p align="center">
-  🍳 <b>Welcome to CookiFy!</b> Transform your everyday ingredients into extraordinary meals with our AI-powered recipe generation platform. Whether you're a novice cook or a culinary enthusiast, our intelligent system creates personalized recipes, provides step-by-step cooking guidance, and helps you reinvent your favorite dishes! Plus, enjoy voice-controlled features and smart cooking timers! 🤖👨‍🍳✨
+   <b>Welcome to CookiFy!</b> Transform your everyday ingredients into extraordinary meals with our AI-powered recipe generation platform. Whether you're a novice cook or a culinary enthusiast, our intelligent system creates personalized recipes, provides step-by-step cooking guidance, and helps you reinvent your favorite dishes! Plus, enjoy voice-controlled features and smart cooking timers! 🤖👨‍🍳✨
 </p>
 
 <p align="center">
@@ -38,7 +36,6 @@
   <a href="#-key-features">Key Features</a> •   
   <a href="#-tech-stack">Tech Stack</a> •
   <a href="#-getting-started">Getting Started</a> •
-  <a href="#-folder-structure">Folder Structure</a> •
   <a href="#-contributing">Contributing</a> •
   <a href="#-showcase">Showcase</a> •
   <a href="#-faqs">FAQs</a> •
@@ -118,11 +115,8 @@ With a focus on accessibility and user experience, CookiFy empowers home cooks o
 * **Build Tool:** [Vite](https://vitejs.dev/) <img src="https://vitejs.dev/logo.svg" alt="Vite" width="24" height="24"/>
 * **Language:** [TypeScript](https://www.typescriptlang.org/) <img src="https://cdn.worldvectorlogo.com/logos/typescript.svg" alt="TypeScript" width="24" height="24"/>
 * **Styling:** [Tailwind CSS](https://tailwindcss.com/) <img src="https://cdn.worldvectorlogo.com/logos/tailwind-css-2.svg" alt="Tailwind CSS" width="24" height="24"/>
-* **Backend & Auth:** [Appwrite](https://appwrite.io/) <img src="https://appwrite.io/images/github.png" alt="Appwrite" width="24" height="24"/>
+* **Backend & Auth:** [Appwrite](https://appwrite.io/) <img src="https://yt3.googleusercontent.com/JxiTnGkkU1EViI1cXJH0zDgec2lx8o653S21Fp2_sbQfJ5UWYOz_ng3HyfErkAbGT0rcMi7E=s900-c-k-c0x00ffffff-no-rj" alt="Appwrite" width="24" height="24"/>
 * **AI Engine:** [Google Gemini](https://ai.google.dev/) <img src="https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg" alt="Google Gemini" width="24" height="24"/>
-* **Voice Features:** [Web Speech API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API) <img src="https://developer.mozilla.org/favicon-48x48.bc390275e955dacb2e65.png" alt="Web API" width="24" height="24"/>
-* **Routing:** [React Router](https://reactrouter.com/) <img src="https://reactrouter.com/_brand/react-router-mark-color.png" alt="React Router" width="24" height="24"/>
-* **Image Processing:** [html2canvas](https://html2canvas.hertzen.com/) <img src="https://html2canvas.hertzen.com/favicon.ico" alt="html2canvas" width="24" height="24"/>
 
 ---
 
@@ -181,53 +175,6 @@ Follow these steps to set up and run CookiFy locally:
 
 ---
 
-## <img src="https://cdn.dribbble.com/userupload/23959994/file/original-8566763c507faa8eb877f9dfec3e9ff0.gif" width="35px" /> Folder Structure
-
-```
-cookify/
-├── public/                    # Static assets
-│   └── images/               # Image assets (logos, banners)
-├── src/                      # Source code
-│   ├── components/           # React components
-│   │   ├── auth/            # Authentication components
-│   │   │   ├── Login.tsx
-│   │   │   └── Signup.tsx
-│   │   ├── pages/           # Page components
-│   │   │   ├── HomePage.tsx
-│   │   │   ├── FavoritesPage.tsx
-│   │   │   ├── ReinventionPage.tsx
-│   │   │   └── CookingPath.tsx
-│   │   └── ui/              # Reusable UI components
-│   │       ├── Header.tsx
-│   │       ├── RecipeCard.tsx
-│   │       ├── VoiceControl.tsx
-│   │       └── Icons.tsx
-│   ├── contexts/            # React contexts
-│   │   ├── AuthContext.tsx
-│   │   └── NotificationContext.tsx
-│   ├── hooks/               # Custom React hooks
-│   │   ├── useFavorites.ts
-│   │   ├── useRecipeShare.ts
-│   │   └── useTextToSpeech.ts
-│   ├── services/            # API and service integrations
-│   │   ├── appwriteService.ts
-│   │   ├── geminiService.ts
-│   │   ├── nutritionService.ts
-│   │   └── voiceService.ts
-│   ├── utils/               # Utility functions and constants
-│   │   ├── constants.ts
-│   │   └── index.ts
-│   ├── App.tsx              # Main app component
-│   ├── index.tsx            # App entry point
-│   ├── types.ts             # TypeScript type definitions
-│   └── index.css            # Global styles
-├── .env.local               # Environment variables (gitignored)
-├── vite.config.ts           # Vite configuration
-├── package.json             # Dependencies and scripts
-└── tsconfig.json            # TypeScript configuration
-```
-
----
 
 ## <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f4f8/512.webp" width="25px" /> Showcase
 
